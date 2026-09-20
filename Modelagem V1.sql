@@ -1,3 +1,4 @@
+DROP DATABASE hachi;
 CREATE DATABASE IF NOT EXISTS hachi;
 USE hachi;
 
@@ -30,11 +31,9 @@ CREATE TABLE compra (
 CREATE TABLE resgate (
     idResgate INT NOT NULL,
     custo INT NOT NULL,
-    data_conquista DATETIME NOT NULL,
-    data_resgate DATETIME,
+    data_resgate DATETIME NOT NULL,
     fk_usuario INT NOT NULL,
     fk_beneficio INT NOT NULL,
-    status VARCHAR(45) NOT NULL,
     CONSTRAINT pk_resgate
         PRIMARY KEY (idResgate, fk_usuario, fk_beneficio),
     CONSTRAINT fk_resgate_usuario
@@ -43,4 +42,25 @@ CREATE TABLE resgate (
     CONSTRAINT fk_resgate_beneficio
         FOREIGN KEY (fk_beneficio)
         REFERENCES beneficio(idBeneficio)
+);
+
+CREATE TABLE feedback (
+	idFeedback INT AUTO_INCREMENT PRIMARY KEY,
+    nota INT NOT NULL,
+    comentario VARCHAR(255),
+    fk_usuario INT NOT NULL,
+    CONSTRAINT fk_feedback_usuario
+		FOREIGN KEY (fk_usuario) 
+        REFERENCES usuario(idUsuario)
+);
+
+CREATE TABLE solicitacao_musica (
+	idSolicitacao INT AUTO_INCREMENT PRIMARY KEY,
+    musica VARCHAR(255) NOT NULL,
+    artista VARCHAR(255) NOT NULL,
+    dataHora DATETIME,
+    fk_usuario INT NOT NULL,
+    CONSTRAINT fk_musica_usuario
+		FOREIGN KEY (fk_usuario) 
+        REFERENCES usuario(idUsuario)
 );
